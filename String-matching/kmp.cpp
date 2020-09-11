@@ -1,12 +1,16 @@
-vector<int> kmp(string &s) {
-	n = s.size();
-	vector<int> pi(n + 10, 0);
-	int j = 0;
+int kmp(string &s, string &t) {
+	int a = s.size();
+	int b = t.size();
+
+	string u = s + '#' + t;
+	int pi[u.size()] = {0};
+	int n = u.size();
 	for (int i = 1; i < n; i++) {
-		while (j > 0 && s[i] != s[j]) j = pi[j - 1];
-		if (s[i] == s[j]) ++j;
+		int j = pi[i - 1];
+		while (j > 0 && u[i] != u[j]) j = pi[j - 1];
+		if (u[i] == u[j]) ++j;
 		pi[i] = j;
 	}
-	pi.insert(pi.begin(), 0);
-	return pi;
+	return *max_element(pi + a + 1, pi + n);
+
 }
